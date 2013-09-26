@@ -3,10 +3,12 @@ package Tests;
 import static org.junit.Assert.*;
 
 import java.util.LinkedList;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
 import Clue.IntBoard;
 
 public class IntBoardTests {
@@ -75,5 +77,20 @@ public class IntBoardTests {
 		Assert.assertTrue(testList.contains(14));
 		Assert.assertTrue(testList.contains(9));
 		Assert.assertEquals(4, testList.size());
+	}
+	
+	// testing Target calculation
+	
+	@Test
+	public void testTargets0_3() {
+		board.startTargets(0_3);
+		Set targets = board.getTargets();
+		Assert.assertEquals(6, targets.size());
+		Assert.assertTrue(targets.contains(12));
+		Assert.assertTrue(targets.contains(9));
+		Assert.assertTrue(targets.contains(3));
+		Assert.assertTrue(targets.contains(4));
+		Assert.assertTrue(targets.contains(6));
+		Assert.assertTrue(targets.contains(1));
 	}
 }
