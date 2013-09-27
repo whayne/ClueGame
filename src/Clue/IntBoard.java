@@ -3,23 +3,16 @@ package Clue;
 import java.util.*;
 
 public class IntBoard {
-
-	/**
-	 * @param args
-	 */
+	//private Map<Integer, LinkedList<Integer>> adj;
+	
 	public IntBoard(){
 		
 	}
 	
-	public Map<Integer, LinkedList<Integer>> calcAdjacencies(){
-		Map<Integer, LinkedList<Integer>> adj = new HashMap<Integer, LinkedList<Integer>>();
-		return adj;
+	public void calcAdjacencies(){
+		//adj = new HashMap<Integer, LinkedList<Integer>>();
 	}
 	public void startTargets(int row, int col, int steps){
-		
-	}
-	
-	public void startTargets(int location, int steps){
 		
 	}
 	
@@ -28,7 +21,7 @@ public class IntBoard {
 		return targets;
 	}
 	
-	public LinkedList<Integer> getAdjList() {
+	public LinkedList<Integer> getAdjList(int row, int col) {
 		LinkedList<Integer> adjList = new LinkedList<Integer>();
 		return adjList;
 	}
@@ -39,7 +32,7 @@ public class IntBoard {
 	
 	
 	public static void main(String[] args) {
-		IntBoard board = new IntBoard();
+		//IntBoard board = new IntBoard();
 
 	}
 
