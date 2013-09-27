@@ -5,16 +5,51 @@ package Clue;
 import java.util.*;
 
 public class IntBoard {
-	//private Map<Integer, LinkedList<Integer>> adj;
+	private Map<Integer, LinkedList<Integer>> adj;
+	private Set<Integer> targets;
+	private boolean[] visited;
 	
 	public IntBoard(){
-		
+		adj = new HashMap<Integer, LinkedList<Integer>>(15);
+		targets = new HashSet<Integer>();
+		calcAdjacencies();
+		visited = new boolean[15];
 	}
 	
 	public void calcAdjacencies(){
-		//adj = new HashMap<Integer, LinkedList<Integer>>();
+		for (int i = 0; i < 4; ++i) {
+			for (int j = 0; j < 4; ++j) {
+				LinkedList<Integer> temp = new LinkedList<Integer>();
+				int index = calcIndex(i, j);
+				if ((j - 1) >= 0)
+					temp.add(calcIndex(i, j-1));
+				if ((i + 1) <= 3)
+					temp.add(calcIndex(i+1, j));
+				if ((j + 1) <= 3)
+					temp.add(calcIndex(i, j+1));
+				if ((i - 1) >= 0)
+					temp.add(calcIndex(i-1, j));
+				
+				adj.put(index, temp);	
+			}
+		}
 	}
-	public void startTargets(int row, int col, int steps){
+	public void startTargets(int index, int steps){
+		//int index = calcIndex(row, col);
+		LinkedList<Integer> adjacentCells = new LinkedList<Integer>();
+		for (int cell : adj.get(index)) {
+			if (!visited[cell])
+				adjacentCells.add(cell);
+		}
+		for (int adjCell : adjacentCells) {
+			visited[adjCell] = true;
+			if (steps == 1)
+				targets.add(adjCell);
+			else
+				startTargets(adjCell, steps--);
+			visited[adjCell] = false;
+		}
+				
 		
 	}
 	
@@ -24,12 +59,11 @@ public class IntBoard {
 	}
 	
 	public LinkedList<Integer> getAdjList(int row, int col) {
-		LinkedList<Integer> adjList = new LinkedList<Integer>();
-		return adjList;
+		return adj.get(calcIndex(row, col));
 	}
 	
 	public int calcIndex(int row, int col) {
-		return -1;
+		return row*4 + col;
 	}
 	
 	
