@@ -1,3 +1,5 @@
+// Will Hayne and Anthony Nguyen
+
 package Clue;
 
 import java.util.*;
