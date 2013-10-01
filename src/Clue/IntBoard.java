@@ -10,10 +10,10 @@ public class IntBoard {
 	private boolean[] visited;
 	
 	public IntBoard(){
-		adj = new HashMap<Integer, LinkedList<Integer>>(15);
+		adj = new HashMap<Integer, LinkedList<Integer>>(16);
 		targets = new HashSet<Integer>();
 		calcAdjacencies();
-		visited = new boolean[15];
+		visited = new boolean[16];
 	}
 	
 	public void calcAdjacencies(){
@@ -37,6 +37,7 @@ public class IntBoard {
 	public void startTargets(int index, int steps){
 		//int index = calcIndex(row, col);
 		LinkedList<Integer> adjacentCells = new LinkedList<Integer>();
+		visited[index] = true;
 		for (int cell : adj.get(index)) {
 			if (!visited[cell])
 				adjacentCells.add(cell);
@@ -45,8 +46,11 @@ public class IntBoard {
 			visited[adjCell] = true;
 			if (steps == 1)
 				targets.add(adjCell);
-			else
-				startTargets(adjCell, steps--);
+			else {
+				steps--;
+				startTargets(adjCell, steps);
+				steps++;
+			}
 			visited[adjCell] = false;
 		}
 				
@@ -54,7 +58,6 @@ public class IntBoard {
 	}
 	
 	public Set<Integer> getTargets() {
-		Set<Integer> targets = new HashSet<Integer>();
 		return targets;
 	}
 	

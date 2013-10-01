@@ -102,6 +102,7 @@ public class IntBoardTests {
 	public void testTargets15_2() {
 		board.startTargets(board.calcIndex(3,3),2);
 		Set<Integer> targets = board.getTargets();
+		System.out.println(targets);
 		Assert.assertEquals(3, targets.size());
 		Assert.assertTrue(targets.contains(13));
 		Assert.assertTrue(targets.contains(10));
@@ -140,10 +141,11 @@ public class IntBoardTests {
 	public void testTargets9_3() {
 		board.startTargets(board.calcIndex(2,1),3);
 		Set<Integer> targets = board.getTargets();
-		Assert.assertEquals(7, targets.size());
+		Assert.assertEquals(8, targets.size());
 		Assert.assertTrue(targets.contains(0));
 		Assert.assertTrue(targets.contains(5));
-		Assert.assertTrue(targets.contains(13));
+		Assert.assertTrue(targets.contains(13));	
+		Assert.assertTrue(targets.contains(8));
 		Assert.assertTrue(targets.contains(15));
 		Assert.assertTrue(targets.contains(10));
 		Assert.assertTrue(targets.contains(7));
