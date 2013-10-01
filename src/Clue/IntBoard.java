@@ -61,10 +61,6 @@ public class IntBoard {
 	}
 	
 	
-		
-		
-	}
-	
 	public Set<Integer> getTargets() {
 		//Set<Integer> targets = new HashSet<Integer>();
 		return targets;
