@@ -1,3 +1,5 @@
+// Will Hayne and Anthony Nguyen
+
 package Game;
 
 public class RoomCell extends BoardCell {
@@ -8,9 +10,20 @@ public class RoomCell extends BoardCell {
 	
 	private char initial;
 	
+	@Override
 	public boolean isRoom()
 	{
 		return true;
+	}
+	
+	public DoorDirection getDoorDirection() {
+		return DoorDirection.NONE;
+	}
+	
+	public char getInitial()
+	{
+		initial = 'a';
+		return initial;
 	}
 	
 	

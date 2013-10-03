@@ -1,6 +1,9 @@
+// Will Hayne and Anthony Nguyen
+
 package Game;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
@@ -8,14 +11,38 @@ public class Board {
 	private Map<Character, String> rooms;
 	int numRows, numColumns;
 	
+	public Board(String layout, String legend)
+	{
+		cells = new ArrayList<BoardCell>();
+		rooms = new HashMap<Character, String>();
+	}
+	
 	public void loadConfigFiles() {
+		loadRoomConfig();
+		loadBoardConfig();
+	}
+	
+	//helper method one
+	public void loadRoomConfig()
+	{
+		
+	}
+	
+	//helper method two	
+	public void loadBoardConfig()
+	{
 		
 	}
 	
 	public int calcIndex(int row, int col) {
 		return row*numColumns + col;
 	}
-	public BoardCell GetRoomCellAt(int row, int col) {
+	public RoomCell getRoomCellAt(int row, int col) {
+		return null;
+	}
+	
+	public BoardCell getCellAt(int index)
+	{
 		return null;
 	}
 
