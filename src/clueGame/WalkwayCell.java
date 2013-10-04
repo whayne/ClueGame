@@ -1,6 +1,6 @@
 // Will Hayne and Anthony Nguyen
 
-package Game;
+package clueGame;
 
 public class WalkwayCell extends BoardCell{
 	@Override

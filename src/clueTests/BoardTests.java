@@ -1,6 +1,6 @@
 // Will Hayne and Anthony Nguyen
 
-package Tests;
+package clueTests;
 
 import static org.junit.Assert.*;
 
@@ -11,20 +11,20 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import Game.BadConfigFormatException;
-import Game.Board;
-import Game.BoardCell;
-import Game.RoomCell;
+import clueGame.BadConfigFormatException;
+import clueGame.Board;
+import clueGame.BoardCell;
+import clueGame.RoomCell;
 
 public class BoardTests {
 	private static Board board;
-	public static final int ROOMS = 9;
+	public static final int ROOMS = 11;
 	public static final int ROWS = 22;
 	public static final int COLUMNS = 23;
 	
 	@BeforeClass
 	public static void setUp() {
-		board = new Board("ClueMansion.csv", "Legend.txt");
+		board = new Board("ClueLayout.csv", "ClueLegend.txt");
 		board.loadConfigFiles();
 	}
 	@Test
@@ -33,7 +33,7 @@ public class BoardTests {
 		assertEquals(ROOMS, rooms.size());
 		assertEquals("Man Cave", rooms.get('C'));
 		assertEquals("Gold Room", rooms.get('G'));
-		assertEquals("SpaceShip", rooms.get('S'));
+		assertEquals("Spaceship", rooms.get('S'));
 		assertEquals("Secret Mine", rooms.get('M'));
 		assertEquals("Closet", rooms.get('X'));
 	}
@@ -58,7 +58,7 @@ public class BoardTests {
 		room = board.getRoomCellAt(10, 2);
 		assertTrue(room.isDoorway());
 		assertEquals(RoomCell.DoorDirection.UP, room.getDoorDirection());
-		room = board.getRoomCellAt(14, 14);
+		room = board.getRoomCellAt(6, 2);
 		assertFalse(room.isDoorway());	
 		// Test that walkways are not doors
 		BoardCell cell = board.getCellAt(board.calcIndex(0, 6));
@@ -80,7 +80,7 @@ public class BoardTests {
 		//for some reason, example code has it with her number of rooms being one higher than it should
 		// so while I counted 15 rooms, she tested for 16 instead, leading to: Assert.assertEquals(16, numDoors)
 		// don't know why
-		Assert.assertEquals(17, numDoors);
+		Assert.assertEquals(18, numDoors);
 	}
 	
 	//copied and pasted directly from the code she gave us
@@ -106,7 +106,7 @@ public class BoardTests {
 			assertEquals('G', board.getRoomCellAt(4, 8).getInitial());
 			assertEquals('T', board.getRoomCellAt(10, 1).getInitial());
 			assertEquals('R', board.getRoomCellAt(21, 19).getInitial());
-			assertEquals('L', board.getRoomCellAt(21, 0).getInitial());
+			assertEquals('C', board.getRoomCellAt(21, 0).getInitial());
 		}
 		
 		//the following down below use loadRoomConfig() and loadBoardConfig from Board
