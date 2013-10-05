@@ -27,7 +27,7 @@ public class CR_BoardInitTests {
 	
 	@BeforeClass
 	public static void setUp() {
-		board = new Board("ClueLayout.csv", "ClueLegend.txt");
+		board = new Board("CR_ClueLayout.csv", "CR_ClueLegend.txt");
 		board.loadConfigFiles();
 	}
 	@Test

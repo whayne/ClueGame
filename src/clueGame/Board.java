@@ -6,8 +6,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Board {
 	private ArrayList<BoardCell> cells;
@@ -139,6 +142,32 @@ public class Board {
 		return numColumns;
 	}
 	
+	//had in the AdjTargetTests class, not sure if it was supposed to be linked here or IntBoard
+	//made here just in case
+	public void calcAdjacencies()
+	{
+		
+	}
+	
+	//same with this
+	public LinkedList<Integer> getAdjList(int index)
+	{
+		LinkedList<Integer> temp = new LinkedList<Integer>();
+		temp.add(1);
+		return temp;
+	}
+	
+	//and this
+	public void calcTargets(int row, int col, int steps)
+	{
+		
+	}
+	
+	//naturally this as well
+	public Set<BoardCell> getTargets() {
+		Set<BoardCell> targets = new HashSet<BoardCell>();
+		return targets;
+	}
 	public static void main(String [] args) {
 		//Board board = new Board("ClueMansion.csv", "Legend.txt");
 		//board.loadRoomConfig();
