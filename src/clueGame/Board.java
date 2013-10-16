@@ -11,12 +11,16 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
+//import java.util.TreeSet;
 
 public class Board {
 	private ArrayList<BoardCell> cells;
 	private Map<Character, String> rooms;
+	private Map<Integer, LinkedList<Integer>> adj;
 	int numRows, numColumns;
 	String layout, legend;
+	private boolean[] visited;
+	private Set<BoardCell> targets;
 	
 	public Board(String layout, String legend)
 	{
@@ -24,6 +28,9 @@ public class Board {
 		this.legend = legend;
 		cells = new ArrayList<BoardCell>();
 		rooms = new HashMap<Character, String>();
+		adj = new HashMap<Integer, LinkedList<Integer>>();
+		visited = new boolean[1000];
+		targets = new HashSet<BoardCell>();
 	}
 	
 	public void loadConfigFiles() {
@@ -142,35 +149,142 @@ public class Board {
 		return numColumns;
 	}
 	
-	//had in the AdjTargetTests class, not sure if it was supposed to be linked here or IntBoard
-	//made here just in case
 	public void calcAdjacencies()
 	{
-		
+		for (int i = 0; i < numRows; ++i) {
+			for (int j = 0; j < numColumns; ++j) {
+				
+				LinkedList<Integer> temp = new LinkedList<Integer>();
+				int index = calcIndex(i, j);
+				if(cells.get(index).isDoorway())
+				{
+					if(((RoomCell) cells.get(index)).getDoorDirection() == RoomCell.DoorDirection.RIGHT)
+						temp.add(calcIndex(i,j+1));
+					if(((RoomCell) cells.get(index)).getDoorDirection() == RoomCell.DoorDirection.LEFT)
+						temp.add(calcIndex(i,j-1));
+					if(((RoomCell) cells.get(index)).getDoorDirection() == RoomCell.DoorDirection.UP)
+						temp.add(calcIndex(i-1,j));
+					if(((RoomCell) cells.get(index)).getDoorDirection() == RoomCell.DoorDirection.DOWN)
+						temp.add(calcIndex(i+1,j));
+				}
+				else if(cells.get(index).isWalkway())
+				{
+					if ((j - 1) >= 0)
+					{
+						int tempIndex = calcIndex(i,j-1);
+						if(cells.get(tempIndex).isWalkway())
+							temp.add(tempIndex);
+						else if(cells.get(tempIndex).isDoorway())
+						{
+							if(((RoomCell) cells.get(tempIndex)).getDoorDirection() == RoomCell.DoorDirection.RIGHT)
+								temp.add(tempIndex);
+						}
+					}
+					if ((i + 1) < numRows)
+					{
+						int tempIndex = calcIndex(i+1,j);
+						if(cells.get(tempIndex).isWalkway())
+							temp.add(tempIndex);
+						else if(cells.get(tempIndex).isDoorway())
+						{
+							if(((RoomCell) cells.get(tempIndex)).getDoorDirection() == RoomCell.DoorDirection.UP)
+								temp.add(tempIndex);
+						}
+					}
+					if ((j + 1) < numColumns)
+					{
+						int tempIndex = calcIndex(i,j+1);
+						if(cells.get(tempIndex).isWalkway())
+							temp.add(tempIndex);
+						else if(cells.get(tempIndex).isDoorway())
+						{
+							if(((RoomCell) cells.get(tempIndex)).getDoorDirection() == RoomCell.DoorDirection.LEFT)
+								temp.add(tempIndex);
+						}
+					}
+					if ((i - 1) >= 0)
+					{
+						int tempIndex = calcIndex(i-1,j);
+						if(cells.get(tempIndex).isWalkway())
+							temp.add(tempIndex);
+						else if(cells.get(tempIndex).isDoorway())
+						{
+							if(((RoomCell) cells.get(tempIndex)).getDoorDirection() == RoomCell.DoorDirection.DOWN)
+								temp.add(tempIndex);
+						}
+					}
+				}
+				adj.put(index, temp);	
+			}
+		}
 	}
-	
+
 	//same with this
 	public LinkedList<Integer> getAdjList(int index)
 	{
-		LinkedList<Integer> temp = new LinkedList<Integer>();
-		temp.add(1);
-		return temp;
+		return adj.get(index);
 	}
 	
-	//and this
-	public void calcTargets(int row, int col, int steps)
+	public LinkedList<Integer> getAdjList(int row, int col)
 	{
-		
+		int tempIndex = calcIndex(row, col);
+		return adj.get(tempIndex);
+	}
+
+	//and this
+	
+	public void calcTargets(int row, int col, int steps) {
+		targets = new HashSet<BoardCell>();
+		calculateTargets(row, col, steps);
 	}
 	
+	public void calculateTargets(int row, int col, int steps)
+	{
+		System.out.println("row" +row+"col"+col);
+		int index = calcIndex(row, col);
+		visited[index] = true;
+		Set<BoardCell> adjacentCells = new HashSet<BoardCell>();
+		for (int cell : adj.get(index)) {
+			if (!visited[cell])
+				adjacentCells.add(cells.get(cell));
+		}
+		
+		//for (BoardCell t : adjacentCells) {
+		//		System.out.println(t.getRow() + " col " + t.getCol());
+		//}
+		
+		for (BoardCell adjCell : adjacentCells) {
+			int tempIndex = cells.indexOf(adjCell);
+			System.out.println("Temp" +tempIndex);
+			visited[tempIndex] = true;
+			if (steps == 1) {
+				targets.add(adjCell);
+				System.out.println("\nadjCell " +cells.indexOf(adjCell)+ " size "+targets.size());
+			}
+			else if (cells.get(tempIndex).isDoorway())
+				targets.add(adjCell);
+			else {
+				steps--;
+				//System.out.println("Steps" + steps);
+				//System.out.println("temp: "+tempIndex);
+				int c = tempIndex % numColumns;
+				//System.out.println(c);
+				int r = (tempIndex-c)/numRows;
+				//System.out.println(r);
+				calculateTargets(r, c, steps);
+				steps++;
+			}
+			visited[tempIndex] = false;
+		}
+	}
+
 	//naturally this as well
 	public Set<BoardCell> getTargets() {
-		Set<BoardCell> targets = new HashSet<BoardCell>();
 		return targets;
 	}
 	public static void main(String [] args) {
 		//Board board = new Board("ClueMansion.csv", "Legend.txt");
 		//board.loadRoomConfig();
-	}
-	
+		
+	}	
 }

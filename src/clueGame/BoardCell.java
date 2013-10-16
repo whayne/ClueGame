@@ -14,6 +14,13 @@ public abstract class BoardCell {
 		this.col = col;
 	}
 
+	public int getRow() {
+		return row;
+	}
+	public int getCol() {
+		return col;
+	}
+	
 	public boolean isWalkway()
 	{
 		return false;
