@@ -71,6 +71,7 @@ public class Board {
 			int columnTest = 0;
 			String[] line = new String[0];
 
+			int currentRow = 0;
 			while (input.hasNextLine()) {
 				line = input.nextLine().split(",");
 				for (int i = 0; i < line.length; i++) {
@@ -86,7 +87,7 @@ public class Board {
 					}
 					// Room and Walkway Cells are stored in cells
 					if (line[i].equalsIgnoreCase("W")) {
-						cells.add(new WalkwayCell());
+						cells.add(new WalkwayCell(currentRow, i));
 					} else if ((line[i].length() == 2) || (line[i].length() == 1)) {
 						cells.add(new RoomCell(line[i]));
 					} else {
@@ -99,6 +100,7 @@ public class Board {
 					throw new BadConfigFormatException("In row " + j + " the number of columns does not match the number of columns in the previous row");
 				}
 				j++;
+				currentRow++;
 				columnTest = line.length;
 			}
 			numRows = j;

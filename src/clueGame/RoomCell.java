@@ -8,14 +8,10 @@ public class RoomCell extends BoardCell {
 	private DoorDirection doorDirection;
 	private char initial;
 	
-	public RoomCell() {
+	public RoomCell(int row, int col) {
+		super(row, col);
 		doorDirection = DoorDirection.NONE;
 	}
-	
-	/*public RoomCell(char init) {
-		doorDirection = DoorDirection.NONE;
-		initial = init;
-	}*/
 	
 	public RoomCell(String token) {
 		initial = token.charAt(0);
@@ -34,10 +30,10 @@ public class RoomCell extends BoardCell {
 	}
 	
 	@Override
-	public boolean isRoom()
-	{
+	public boolean isRoom() {
 		return true;
 	}
+	
 	@Override
 	public boolean isDoorway() {
 		if (doorDirection != DoorDirection.NONE)
@@ -45,15 +41,13 @@ public class RoomCell extends BoardCell {
 		else
 			return false;
 	}
+	
 	public DoorDirection getDoorDirection() {
 		return doorDirection;
 	}
 	
-	public char getInitial()
-	{
+	public char getInitial() {
 		return initial;
 	}
-	
-	
 
 }
