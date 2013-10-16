@@ -8,6 +8,7 @@ public abstract class BoardCell {
 	public BoardCell() {
 		row = col = 0;
 	}
+	
 	public BoardCell(int row, int col) {
 		super();
 		this.row = row;
@@ -21,21 +22,15 @@ public abstract class BoardCell {
 		return col;
 	}
 	
-	public boolean isWalkway()
-	{
-		return false;
-		
+	public boolean isWalkway() {
+		return false;	
 	}
 	
-	public boolean isRoom()
-	{
+	public boolean isRoom() {
 		return false;
 	}
 	
-	public boolean isDoorway()
-	{
+	public boolean isDoorway() {
 		return false;
-	}
-	
-	
+	}	
 }
