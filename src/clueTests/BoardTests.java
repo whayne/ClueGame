@@ -27,6 +27,7 @@ public class BoardTests {
 		board = new Board("ClueLayout.csv", "ClueLegend.txt");
 		board.loadConfigFiles();
 	}
+	
 	@Test
 	public void testRooms() {
 		Map<Character, String> rooms = board.getRooms();
@@ -49,17 +50,23 @@ public class BoardTests {
 		RoomCell room = board.getRoomCellAt(17, 13);
 		assertTrue(room.isDoorway());
 		assertEquals(RoomCell.DoorDirection.RIGHT, room.getDoorDirection());
+		
 		room = board.getRoomCellAt(4, 10);
 		assertTrue(room.isDoorway());
 		assertEquals(RoomCell.DoorDirection.DOWN, room.getDoorDirection());
+		
 		room = board.getRoomCellAt(20, 16);
 		assertTrue(room.isDoorway());
 		assertEquals(RoomCell.DoorDirection.LEFT, room.getDoorDirection());
+		
 		room = board.getRoomCellAt(10, 2);
 		assertTrue(room.isDoorway());
 		assertEquals(RoomCell.DoorDirection.UP, room.getDoorDirection());
+		
+		//Test that a room cell is not necessarily a door 
 		room = board.getRoomCellAt(6, 2);
 		assertFalse(room.isDoorway());	
+		
 		// Test that walkways are not doors
 		BoardCell cell = board.getCellAt(board.calcIndex(0, 6));
 		assertFalse(cell.isDoorway());	
@@ -77,14 +84,10 @@ public class BoardTests {
 			if (cell.isDoorway())
 				numDoors++;
 		}
-		//for some reason, example code has it with her number of rooms being one higher than it should
-		// so while I counted 15 rooms, she tested for 16 instead, leading to: Assert.assertEquals(16, numDoors)
-		// don't know why
+	
 		Assert.assertEquals(18, numDoors);
 	}
 	
-	//copied and pasted directly from the code she gave us
-	//should work since our number of rows and cols match exactly
 	@Test
 	public void testCalcIndex() {
 		// Test each corner of the board
@@ -98,49 +101,48 @@ public class BoardTests {
 		assertEquals(66, board.calcIndex(2, 20));		
 	}
 	
-	// Test a few room cells to ensure the room initial is
-		// correct.
-		@Test
-		public void testRoomInitials() {
-			assertEquals('B', board.getRoomCellAt(0, 0).getInitial());
-			assertEquals('G', board.getRoomCellAt(4, 8).getInitial());
-			assertEquals('T', board.getRoomCellAt(10, 1).getInitial());
-			assertEquals('R', board.getRoomCellAt(21, 19).getInitial());
-			assertEquals('C', board.getRoomCellAt(21, 0).getInitial());
-		}
-		
-		//the following down below use loadRoomConfig() and loadBoardConfig from Board
-		//problem is that we didn't have that
-		//looks like the "loadConfigFiles" would probably use those methods
-		//in short, I made two more methods in the Board file, they should me marked with commits
-		
-		// Test that an exception is thrown for a bad config file
-		@Test (expected = BadConfigFormatException.class)
-		public void testBadColumns() throws BadConfigFormatException, FileNotFoundException {
-			Board test = new Board("ClueLayoutBadColumns.csv", "ClueLegend.txt");
-			
-			test.loadRoomConfig();
-			test.loadBoardConfig();
-		}
-		
-		// Test that an exception is thrown for a bad config file
-		@Test (expected = BadConfigFormatException.class)
-		public void testBadRoom() throws BadConfigFormatException, FileNotFoundException {
-			// overloaded Board ctor takes config file name
-			Board test = new Board("ClueLayoutBadRoom.csv", "ClueLegend.txt");
-			
-			test.loadRoomConfig();
-			test.loadBoardConfig();
-		}
-		
-		// Test that an exception is thrown for a bad config file
-		@Test (expected = BadConfigFormatException.class)
-		public void testBadRoomFormat() throws BadConfigFormatException, FileNotFoundException {
-			// overloaded Board ctor takes config file name
-			Board test = new Board("ClueLayout.csv", "ClueLegendBadFormat.txt");
-			
-			test.loadRoomConfig();
-			test.loadBoardConfig();
-		}
-	
+	// Test a few room cells to ensure the room initial is correct
+	@Test
+	public void testRoomInitials() {
+		assertEquals('B', board.getRoomCellAt(0, 0).getInitial());
+		assertEquals('G', board.getRoomCellAt(4, 8).getInitial());
+		assertEquals('T', board.getRoomCellAt(10, 1).getInitial());
+		assertEquals('R', board.getRoomCellAt(21, 19).getInitial());
+		assertEquals('C', board.getRoomCellAt(21, 0).getInitial());
+	}
+
+	//the following down below use loadRoomConfig() and loadBoardConfig from Board
+	//problem is that we didn't have that
+	//looks like the "loadConfigFiles" would probably use those methods
+	//in short, I made two more methods in the Board file, they should me marked with commits
+
+	// Test that an exception is thrown for a bad config file
+	@Test (expected = BadConfigFormatException.class)
+	public void testBadColumns() throws BadConfigFormatException, FileNotFoundException {
+		Board test = new Board("ClueLayoutBadColumns.csv", "ClueLegend.txt");
+
+		test.loadRoomConfig();
+		test.loadBoardConfig();
+	}
+
+	// Test that an exception is thrown for a bad config file
+	@Test (expected = BadConfigFormatException.class)
+	public void testBadRoom() throws BadConfigFormatException, FileNotFoundException {
+		// overloaded Board ctor takes config file name
+		Board test = new Board("ClueLayoutBadRoom.csv", "ClueLegend.txt");
+
+		test.loadRoomConfig();
+		test.loadBoardConfig();
+	}
+
+	// Test that an exception is thrown for a bad config file
+	@Test (expected = BadConfigFormatException.class)
+	public void testBadRoomFormat() throws BadConfigFormatException, FileNotFoundException {
+		// overloaded Board ctor takes config file name
+		Board test = new Board("ClueLayout.csv", "ClueLegendBadFormat.txt");
+
+		test.loadRoomConfig();
+		test.loadBoardConfig();
+	}
+
 }

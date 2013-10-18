@@ -11,7 +11,6 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
-//import java.util.TreeSet;
 
 public class Board {
 	private ArrayList<BoardCell> cells;
@@ -32,6 +31,7 @@ public class Board {
 		targets = new HashSet<BoardCell>();
 	}
 	
+	//Calls our helper methods for loading room keys and board
 	public void loadConfigFiles() {
 		try {
 			loadRoomConfig();
@@ -41,7 +41,8 @@ public class Board {
 		}
 	}
 	
-	//helper method one
+	//Gets each character key and associated room name from room config file 
+	//Stores information in our HashMap called rooms
 	public void loadRoomConfig() throws BadConfigFormatException {
 		try {
 			FileReader r = new FileReader(legend);
@@ -61,7 +62,7 @@ public class Board {
 		}
 	}
 	
-	//helper method two	
+	//Gets characters from our csv file and stores in our ArrayList of BoardCells
 	public void loadBoardConfig() throws BadConfigFormatException {
 		try {
 			FileReader r = new FileReader(layout);
@@ -160,7 +161,7 @@ public class Board {
 					if(((RoomCell) cells.get(index)).getDoorDirection() == RoomCell.DoorDirection.DOWN)
 						temp.add(calcIndex(i+1,j));
 				} else if(cells.get(index).isWalkway()) {
-					if ((j - 1) >= 0) {
+					if ((j - 1) >= 0) { //If cell is on far left side of board
 						int tempIndex = calcIndex(i,j-1);
 						if(cells.get(tempIndex).isWalkway())
 							temp.add(tempIndex);
@@ -170,7 +171,7 @@ public class Board {
 								temp.add(tempIndex);
 						}
 					}
-					if ((i + 1) < numRows) {
+					if ((i + 1) < numRows) { //If cell is located at bottom of board
 						int tempIndex = calcIndex(i+1,j);
 						if(cells.get(tempIndex).isWalkway())
 							temp.add(tempIndex);
@@ -180,7 +181,7 @@ public class Board {
 								temp.add(tempIndex);
 						}
 					}
-					if ((j + 1) < numColumns) {
+					if ((j + 1) < numColumns) { //IF cell is located on far right side of board
 						int tempIndex = calcIndex(i,j+1);
 						if(cells.get(tempIndex).isWalkway())
 							temp.add(tempIndex);
@@ -190,7 +191,7 @@ public class Board {
 								temp.add(tempIndex);
 						}
 					}
-					if ((i - 1) >= 0) {
+					if ((i - 1) >= 0) { //If cell is located at very top of board 
 						int tempIndex = calcIndex(i-1,j);
 						if(cells.get(tempIndex).isWalkway())
 							temp.add(tempIndex);
