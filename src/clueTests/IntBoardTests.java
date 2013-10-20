@@ -3,6 +3,7 @@
 package clueTests;
 
 import static org.junit.Assert.*;
+import init.IntBoard;
 
 import java.util.LinkedList;
 import java.util.Set;
@@ -10,8 +11,6 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import Clue.IntBoard;
 
 public class IntBoardTests {
 	private IntBoard board;
